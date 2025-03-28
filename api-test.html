@@ -10,12 +10,16 @@
         const CLIENT_ID = '0b3f2dac-f40b-412b-b642-faeef526ad0f';  // Client ID الخاص بك
         const CLIENT_SECRET = '240aad021ca0a1df7d2037fa71c252c1';  // Client Secret الخاص بك
 
+        // إعداد البيانات المطلوبة في body للطلب
         const data = new URLSearchParams();
         data.append('client_id', CLIENT_ID);
         data.append('client_secret', CLIENT_SECRET);
         data.append('grant_type', 'client_credentials');
 
-        fetch('https://accounts.salla.sa/oauth2/token', {
+        // استخدام CORS Proxy للتجاوز
+        const apiUrl = 'https://cors-anywhere.herokuapp.com/https://accounts.salla.sa/oauth2/token';
+
+        fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -27,11 +31,11 @@
             if (data.access_token) {
                 console.log('Access Token:', data.access_token);  // إذا تم الحصول على التوكن بنجاح
             } else {
-                console.error('Error:', data);
+                console.error('Error:', data);  // طباعة الخطأ في حالة عدم الحصول على التوكن
             }
         })
         .catch(error => {
-            console.error('Error:', error);  // أي خطأ في الاتصال أو في البيانات
+            console.error('Error:', error);  // طباعة أي خطأ في الاتصال أو البيانات
         });
     </script>
 </body>
