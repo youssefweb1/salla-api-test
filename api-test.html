@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salla OAuth Test</title>
+</head>
+<body>
+    <script>
+        const CLIENT_ID = '0b3f2dac-f40b-412b-b642-faeef526ad0f';  // Client ID الخاص بك
+        const CLIENT_SECRET = '240aad021ca0a1df7d2037fa71c252c1';  // Client Secret الخاص بك
+
+        const data = new URLSearchParams();
+        data.append('client_id', CLIENT_ID);
+        data.append('client_secret', CLIENT_SECRET);
+        data.append('grant_type', 'client_credentials');
+
+        fetch('https://accounts.salla.sa/oauth2/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: data
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.access_token) {
+                console.log('Access Token:', data.access_token);  // إذا تم الحصول على التوكن بنجاح
+            } else {
+                console.error('Error:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);  // أي خطأ في الاتصال أو في البيانات
+        });
+    </script>
+</body>
+</html>
